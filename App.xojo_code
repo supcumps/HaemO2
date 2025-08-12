@@ -756,49 +756,59 @@ Inherits ConsoleApplication
 
 	#tag Method, Flags = &h21
 		Private Function RunClinicalStudy() As Boolean
+		  Var logger As New Logger(SpecialFolder.Documents, "Haem02LogFile")
 		  
 		  stdout.WriteLine("HAEMODYNAMICS")
 		  stdout.WriteLine("-------------")
 		  
 		  ' Patient demographic data
+		  logger.Log(" Patient demographic data","INFO" ,"DrPhilip", "SessionA123")
 		  Var patientData As New PatientData
 		  If Not CollectPatientData(patientData) Then Return True ' User wants to restart
 		  
 		  ' Haemodynamic measurements
+		  logger.Log("Haemodynamic measurements","INFO" ,"DrPhilip", "SessionA123")
 		  Var haemoData As New HaemodynamicData
 		  If Not CollectHaemodynamicData(haemoData) Then Return True ' User wants to restart
 		  
 		  ' Cardiac output measurements
+		  logger.Log(" Cardiac output measurements","INFO" ,"DrPhilip", "SessionA123")
 		  Var cardiacOutputs() As Double
 		  If Not CollectCardiacOutputs(cardiacOutputs) Then Return True ' User wants to restart
 		  
 		  ' Calculate basic haemodynamic parameters
+		  logger.Log(" Calculate basic haemodynamic parameters","INFO" ,"DrPhilip", "SessionA123")
 		  Var results As New CalculationResults
 		  CalculateHaemodynamics(patientData, haemoData, cardiacOutputs, results)
 		  
 		  ' Optional oxygen transport studies
+		  logger.Log(" oxygen transport studies","INFO" ,"DrPhilip", "SessionA123")
 		  Var oxygenData As New OxygenTransportData
 		  Var includeOxygen As Boolean = ConsoleHelpers.AskYesNo("WOULD YOU LIKE TO TEST OXYGEN TRANSPORT?")
 		  
 		  If includeOxygen Then
+		    logger.Log("Started oxygen transport studies","INFO" ,"DrPhilip", "SessionA123")
 		    If Not CollectOxygenTransportData(oxygenData) Then Return True
 		    CalculateOxygenTransport(patientData, haemoData, oxygenData, results)
 		  End If
 		  
 		  ' Review data option
 		  If ConsoleHelpers.AskYesNo("DO YOU WANT TO CHECK THE DATA SO FAR") Then
+		    logger.Log("Checking Data","INFO" ,"DrPhilip", "SessionA123")
 		    ShowDataReview(patientData, haemoData, cardiacOutputs, oxygenData, includeOxygen)
 		  Else
 		    ClearScreen()
 		  end If
 		  
 		  If ConsoleHelpers.AskYesNo("DO YOU WANT TO MAKE ANY CHANGES?") Then
+		    logger.Log("Changing Data","INFO" ,"DrPhilip", "SessionA123")
 		    Return True ' Restart data collection
 		  Else
 		    ClearScreen()
 		  End If
 		  
 		  ' Output selection and display
+		  logger.Log("Output selection","INFO" ,"DrPhilip", "SessionA123")
 		  HandleOutput(patientData, haemoData, cardiacOutputs, oxygenData, results, includeOxygen)
 		  
 		  ' Ask if user wants to continue
@@ -900,8 +910,8 @@ Inherits ConsoleApplication
 		Private Sub ShowIntroduction()
 		  
 		  Var logger As New Logger(SpecialFolder.Documents, "Haem02LogFile")
-		  logger.Log("App started", "Introduciton", "DrPhilip", "SessionA123")
-		  logger.close
+		  logger.Log("App started", "Introduction", "DrPhilip", "SessionA123")
+		  
 		  ResizeTerminal(100,50)
 		  setScreenColours()
 		  
