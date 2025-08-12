@@ -144,16 +144,6 @@ Inherits ConsoleApplication
 	#tag EndMethod
 
 	#tag Method, Flags = &h21
-		Private Sub ClearScreen()
-		  
-		  ' In console applications, we can clear by printing blank lines
-		  For i As Integer = 1 To 2
-		    stdout.WriteLine("")
-		  Next
-		End Sub
-	#tag EndMethod
-
-	#tag Method, Flags = &h21
 		Private Function CollectCardiacOutputs(ByRef outputs() As Double) As Boolean
 		  Do
 		    ClearScreen()
@@ -179,7 +169,12 @@ Inherits ConsoleApplication
 		      
 		      outputFile.Close
 		      
-		      If ConsoleHelpers.AskYesNo("ARE YOU HAPPY WITH THESE ENTRIES") Then Return True
+		      If ConsoleHelpers.AskYesNo("ARE YOU HAPPY WITH THESE ENTRIES") Then 
+		        Return True
+		      Else
+		        Return False
+		      End If
+		      
 		      
 		    Catch e As IOException
 		      stdout.WriteLine("Error writing cardiac output data: " + e.Message)
@@ -214,7 +209,13 @@ Inherits ConsoleApplication
 		    stdout.WriteLine("")
 		    stdout.WriteLine("")
 		    
-		    If ConsoleHelpers.AskYesNo("ARE THE DATA CORRECT?") Then Return True
+		    If ConsoleHelpers.AskYesNo("ARE THE DATA CORRECT?") Then 
+		      Return True
+		    Else
+		      ClearScreen()
+		    End If
+		    
+		    
 		  Loop
 		End Function
 	#tag EndMethod
@@ -255,6 +256,7 @@ Inherits ConsoleApplication
 	#tag Method, Flags = &h21
 		Private Function CollectPatientData(data As PatientData) As Boolean
 		  Do
+		    
 		    data.Name = ConsoleHelpers.AskText("NAME (E.G. ROBERTS,JOHN....)")
 		    data.MRN = ConsoleHelpers.AskText("MEDICAL RECORD NUMBER")
 		    data.Date = ConsoleHelpers.AskText("DATE (E.G. 09-04-83)")
@@ -266,7 +268,11 @@ Inherits ConsoleApplication
 		    
 		    stdout.WriteLine("")
 		    
-		    If ConsoleHelpers.AskYesNo("ARE THE DATA CORRECT?") Then Return True
+		    If ConsoleHelpers.AskYesNo("ARE THE DATA CORRECT?") Then 
+		      Return True
+		    Else
+		      ClearScreen()
+		    end if
 		  Loop
 		  
 		End Function
@@ -448,8 +454,9 @@ Inherits ConsoleApplication
 		  Var file As FolderItem 
 		  file = SpecialFolder.Documents.Child("ICU_Report.txt")
 		  var textFile As TextOutputStream = TextOutputStream.Create(file)
-		  
-		  
+		  stdout.WriteLine("")
+		  stdout.WriteLine("This report will be written to a text file called " + file.Name + " in the Documents folder")
+		  stdout.WriteLine("")
 		  ' Header
 		  textFile.WriteLine(" I.C.U. Haemodynamics and Oxygen Transport Report")
 		  textFile.WriteLine("--------------------------------")
@@ -529,6 +536,8 @@ Inherits ConsoleApplication
 		  textFile.WriteLine("ARTERIAL-ALVEOLAR RATIO" + Format(results.AARatio, "#######") + " %")
 		  textFile.WriteLine("PULMONARY SHUNT........ " + Format(results.Shunt, "#######") + " %")
 		  
+		  stdout.WriteLine("")
+		  
 		  
 		  
 		  
@@ -592,9 +601,15 @@ Inherits ConsoleApplication
 		  stdout.WriteLine("CORONARY PERFUSION PRESSURE.. " + Format(results.CoronaryPerfusionPressure, "#######") + " MM.HG. ")
 		  
 		  If includeOxygen Then
+		    stdout.WriteLine("")
 		    ConsoleHelpers.PauseForNext()
 		    DisplayOxygenTransportResults(oxygen, results)
 		  End If
+		  
+		  stdout.WriteLine("OVERALL ASSESSMENT:")
+		  stdout.WriteLine("------------------")
+		  stdout.WriteLine(ClinicalInterpreter.GenerateOverallAssessment(results))
+		  stdout.WriteLine("")
 		  
 		End Sub
 	#tag EndMethod
@@ -870,8 +885,13 @@ Inherits ConsoleApplication
 
 	#tag Method, Flags = &h21
 		Private Sub ShowIntroduction()
+		  ResizeTerminal(100,50)
+		  setScreenColours()
 		  
-		  
+		  stdout.WriteLine("")
+		  stdout.WriteLine("")
+		  stdout.WriteLine("")
+		  stdout.WriteLine("")
 		  stdout.WriteLine(" HAEMODYNAMICS AND OXYGEN TRANSPORT STUDIES ")
 		  stdout.WriteLine("")
 		  stdout.WriteLine("                         <V 3.7> 20-OCT-85")
@@ -904,6 +924,37 @@ Inherits ConsoleApplication
 	#tag EndMethod
 
 
+	#tag Note, Name = Ansi colour codes
+		ANSI color codes for reference:
+		Text Colors (30-37):
+		
+		30 = Black
+		31 = Red
+		32 = Green
+		33 = Yellow
+		34 = Blue
+		35 = Magenta
+		36 = Cyan
+		37 = White
+		
+		Background Colors (40-47):
+		
+		40 = Black background
+		41 = Red background
+		42 = Green background
+		43 = Yellow background
+		44 = Blue background
+		45 = Magenta background
+		46 = Cyan background
+		47 = White background
+		
+		Bright/Bold variants (90-97 for text, 100-107 for backgrounds):
+		
+		97 = Bright white text
+		107 = Bright white background
+		
+	#tag EndNote
+
 	#tag Note, Name = Range of values
 		Haemodynamic and Oxygen Transport Reference Values
 		
@@ -920,16 +971,19 @@ Inherits ConsoleApplication
 		Central Venous Pressure    2 - 8    mmHg
 		Pulmonary Artery Pressure    15 - 30/4 - 12    mmHg (systolic/diastolic)
 		Pulmonary Capillary Wedge Pressure    6 - 12    mmHg
+		
 		Vascular Resistance
 		Parameter    Normal Range    Units
 		Systemic Vascular Resistance (SVR)    1760 - 2600    dyne·s/cm⁵
 		Pulmonary Vascular Resistance (PVR)    45 - 225    dyne·s/cm⁵
+		
 		Cardiac Work Indices
 		Parameter    Normal Range    Units
 		Left Ventricular Stroke Work Index (LVSWI)    44 - 68    g·m/beat/m²
 		Right Ventricular Stroke Work Index (RVSWI)    4 - 8    g·m/beat/m²
 		Left Cardiac Work Index    3.0 - 4.6    kg·m/min/m²
 		Right Cardiac Work Index    0.4 - 0.6    kg·m/min/m²
+		
 		Oxygen Transport Parameters
 		Parameter    Normal Range    Units
 		Oxygen Delivery (DO₂I)    520 - 720    mL/min/m²
