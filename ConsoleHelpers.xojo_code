@@ -54,6 +54,7 @@ Protected Module ConsoleHelpers
 		      Input = Input.Trim.Uppercase
 		      'stdout.WriteLine("DEBUG: Clean input = '" + Input + "'")
 		      
+		      
 		      Select Case Input
 		      Case "Y", "YES"
 		        Return True
