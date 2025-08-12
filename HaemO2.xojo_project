@@ -8,6 +8,7 @@ Class=PatientData;PatientData.xojo_code;&h0000000004DAD7FF;&h0000000000000000;fa
 Class=HaemodynamicData;HaemodynamicData.xojo_code;&h00000000427E5FFF;&h0000000000000000;false
 Class=OxygenTransportData;OxygenTransportData.xojo_code;&h00000000331FE7FF;&h0000000000000000;false
 Class=CalculationResults;CalculationResults.xojo_code;&h0000000025EA37FF;&h0000000000000000;false
+Class=Logger;Logger.xojo_code;&h000000000B460FFF;&h0000000000000000;false
 Module=ConsoleHelpers;ConsoleHelpers.xojo_code;&h0000000072D26FFF;&h0000000000000000;false
 Module=ClinicalInterpreter;ClinicalInterpreter.xojo_code;&h000000004614CFFF;&h0000000000000000;false
 MajorVersion=1

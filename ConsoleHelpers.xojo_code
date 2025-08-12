@@ -2,29 +2,36 @@
 Protected Module ConsoleHelpers
 	#tag Method, Flags = &h0
 		Function AskDouble(prompt As String) As Double
+		  // AskDouble(prompt As String) As Double
 		  Do
 		    stdout.Write(prompt + ": ")
-		    Var Input As String = stdin.ReadLine
+		    stdout.Flush
 		    
-		    Try
-		      Return Val(Input)
-		    Catch
-		      stdout.WriteLine("Please enter a valid number. ")
-		    End Try
+		    Var rawInput As String = stdin.ReadLine
+		    Var cleanInput As String = CleanInput(rawInput)
+		    
+		    If cleanInput <> "" Then
+		      Try
+		        Return cleanInput.ToDouble
+		      Catch
+		        stdout.WriteLine("Please enter a valid number.")
+		      End Try
+		    Else
+		      stdout.WriteLine("Please enter a valid number.")
+		    End If
 		  Loop
-		  
-		  
 		End Function
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
 		Function AskText(prompt As String) As String
-		  
 		  If prompt <> "" Then
 		    stdout.Write(prompt + ": ")
+		    stdout.Flush
 		  End If
-		  Return stdin.ReadLine
 		  
+		  Var rawInput As String = stdin.ReadLine
+		  Return CleanInput(rawInput)
 		End Function
 	#tag EndMethod
 
@@ -58,6 +65,26 @@ Protected Module ConsoleHelpers
 		    End If
 		  Wend
 		  
+		  
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function CleanInput(rawInput As String) As String
+		  // Add this as a shared method in ConsoleHelpers
+		  // Function CleanInput(rawInput As String) As String
+		  // Use the exact same logic that works in AskYesNo
+		  Var cleanInput As String = ""
+		  For i As Integer = 0 To rawInput.Length - 1
+		    Var char As String = rawInput.Mid(i, 1)
+		    Var ascii As Integer = Asc(char)
+		    // Skip null characters and other control characters  
+		    If ascii >= 32 And ascii <= 126 Then
+		      cleanInput = cleanInput + char
+		    End If
+		  Next
+		  
+		  return cleanInput
 		End Function
 	#tag EndMethod
 

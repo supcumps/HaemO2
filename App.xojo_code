@@ -172,7 +172,7 @@ Inherits ConsoleApplication
 		      If ConsoleHelpers.AskYesNo("ARE YOU HAPPY WITH THESE ENTRIES") Then 
 		        Return True
 		      Else
-		        Return False
+		        clearscreen()
 		      End If
 		      
 		      
@@ -247,7 +247,11 @@ Inherits ConsoleApplication
 		    
 		    stdout.WriteLine("")
 		    
-		    If ConsoleHelpers.AskYesNo("ARE THE DATA CORRECT?") Then Return True
+		    If ConsoleHelpers.AskYesNo("ARE THE DATA CORRECT?") Then 
+		      Return True
+		    Else
+		      ClearScreen()
+		    end if
 		  Loop
 		  
 		End Function
@@ -255,6 +259,7 @@ Inherits ConsoleApplication
 
 	#tag Method, Flags = &h21
 		Private Function CollectPatientData(data As PatientData) As Boolean
+		  
 		  Do
 		    
 		    data.Name = ConsoleHelpers.AskText("NAME (E.G. ROBERTS,JOHN....)")
@@ -682,7 +687,10 @@ Inherits ConsoleApplication
 		  
 		  If ConsoleHelpers.AskYesNo("DO YOU WANT TO REVIEW THIS DATA?") Then
 		    HandleOutput(patient, haemo, outputs, oxygen, results, includeOxygen)
-		  End If
+		  Else
+		    ClearScreen()
+		  end if
+		  
 		  
 		End Sub
 	#tag EndMethod
@@ -780,9 +788,14 @@ Inherits ConsoleApplication
 		  ' Review data option
 		  If ConsoleHelpers.AskYesNo("DO YOU WANT TO CHECK THE DATA SO FAR") Then
 		    ShowDataReview(patientData, haemoData, cardiacOutputs, oxygenData, includeOxygen)
-		    If ConsoleHelpers.AskYesNo("DO YOU WANT TO MAKE ANY CHANGES?") Then
-		      Return True ' Restart data collection
-		    End If
+		  Else
+		    ClearScreen()
+		  end If
+		  
+		  If ConsoleHelpers.AskYesNo("DO YOU WANT TO MAKE ANY CHANGES?") Then
+		    Return True ' Restart data collection
+		  Else
+		    ClearScreen()
 		  End If
 		  
 		  ' Output selection and display
@@ -885,6 +898,10 @@ Inherits ConsoleApplication
 
 	#tag Method, Flags = &h21
 		Private Sub ShowIntroduction()
+		  
+		  Var logger As New Logger(SpecialFolder.Documents, "Haem02LogFile")
+		  logger.Log("App started", "Introduciton", "DrPhilip", "SessionA123")
+		  logger.close
 		  ResizeTerminal(100,50)
 		  setScreenColours()
 		  
