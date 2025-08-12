@@ -5,6 +5,7 @@ Inherits ConsoleApplication
 		Function Run(args() as String) As Integer
 		  
 		  Try
+		    // show the initial display screen
 		    ShowIntroduction()
 		    
 		    Do
