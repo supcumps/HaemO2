@@ -312,6 +312,110 @@ None
 
 ---
 
+### ConsoleHelpers
+
+**Description:** Module containing shared methods and properties
+
+#### Properties
+
+None
+
+#### Methods
+
+- **`AskDouble`** Public Function
+  - **Parameters:** `prompt As String`
+  - **Returns:** `Double`
+  - **Signature:** `Public Function AskDouble(prompt As String) As Double`
+
+- **`AskText`** Public Function
+  - **Parameters:** `prompt As String`
+  - **Returns:** `String`
+  - **Signature:** `Public Function AskText(prompt As String) As String`
+
+- **`AskYesNo`** Public Function
+  - **Parameters:** `prompt As String`
+  - **Returns:** `Boolean`
+  - **Signature:** `Public Function AskYesNo(prompt As String) As Boolean`
+
+- **`CleanInput`** Public Function
+  - **Parameters:** `rawInput As String`
+  - **Returns:** `String`
+  - **Signature:** `Public Function CleanInput(rawInput As String) As String`
+
+- **`ClearLine`** Public Sub
+  - **Signature:** `Public Sub ClearLine()`
+
+- **`ClearScreen`** Public Sub
+  - **Signature:** `Public Sub ClearScreen()`
+
+- **`ClearToEnd`** Public Sub
+  - **Signature:** `Public Sub ClearToEnd()`
+
+- **`GoToTop`** Public Sub
+  - **Signature:** `Public Sub GoToTop()`
+
+- **`PauseForNext`** Public Sub
+  - **Signature:** `Public Sub PauseForNext()`
+
+- **`ResizeTerminal`** Public Sub
+  - **Parameters:** `cols As Integer, rows As Integer`
+  - **Signature:** `Public Sub ResizeTerminal(cols As Integer, rows As Integer)`
+
+- **`setScreenColours`** Public Sub
+  - **Signature:** `Public Sub setScreenColours()`
+
+#### Events
+
+None
+
+---
+
+### ClinicalInterpreter
+
+**Description:** Module containing shared methods and properties
+
+#### Properties
+
+None
+
+#### Methods
+
+- **`GenerateOverallAssessment`** Public Function
+  - **Parameters:** `results As CalculationResults`
+  - **Returns:** `String`
+  - **Signature:** `Public Function GenerateOverallAssessment(results As CalculationResults) As String`
+
+- **`GetTreatmentSuggestions`** Public Function
+  - **Parameters:** `results As CalculationResults`
+  - **Returns:** `String()`
+  - **Signature:** `Public Function GetTreatmentSuggestions(results As CalculationResults) As String()`
+
+- **`InterpretCardiacIndex`** Public Function
+  - **Parameters:** `ci As Double`
+  - **Returns:** `String`
+  - **Signature:** `Public Function InterpretCardiacIndex(ci As Double) As String`
+
+- **`InterpretMixedVenousSat`** Public Function
+  - **Parameters:** `mvSat As Double`
+  - **Returns:** `String`
+  - **Signature:** `Public Function InterpretMixedVenousSat(mvSat As Double) As String`
+
+- **`InterpretOxygenExtraction`** Public Function
+  - **Parameters:** `extraction As Double`
+  - **Returns:** `String`
+  - **Signature:** `Public Function InterpretOxygenExtraction(extraction As Double) As String`
+
+- **`InterpretSVR`** Public Function
+  - **Parameters:** `svr As Double`
+  - **Returns:** `String`
+  - **Signature:** `Public Function InterpretSVR(svr As Double) As String`
+
+#### Events
+
+None
+
+---
+
 ## Requirements
 
 - **Xojo:** Latest compatible version
