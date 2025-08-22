@@ -210,11 +210,11 @@ Inherits ConsoleApplication
 		    stdout.WriteLine("")
 		    
 		    If ConsoleHelpers.AskYesNo("ARE THE DATA CORRECT?") Then 
-		      ClearScreen()
 		      
 		      Return True
 		    Else
 		      ClearScreen()
+		      GoToTop
 		    End If
 		    
 		    
@@ -250,10 +250,10 @@ Inherits ConsoleApplication
 		    stdout.WriteLine("")
 		    
 		    If ConsoleHelpers.AskYesNo("ARE THE DATA CORRECT?") Then 
-		      ClearScreen()
-		      
 		      Return True
-		      
+		    Else
+		      ClearScreen()
+		      GoToTop
 		    end if
 		  Loop
 		  

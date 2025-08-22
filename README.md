@@ -6,7 +6,7 @@ This Xojo project contains the following components:
 
 ## Project Components
 
-- **Classes:** 6 (App, PatientData, HaemodynamicData, OxygenTransportData, CalculationResults, Logger)
+- **Classes:** 6 (App, PatientData, HaemodynamicData, OxygenTransportData, CalculationResults, debugLog)
 - **Modules:** 2 (ConsoleHelpers, ClinicalInterpreter)
 
 ## Classes
@@ -52,6 +52,10 @@ None
   - **Returns:** `Boolean`
   - **Signature:** `Private Function CollectPatientData(data As PatientData) As Boolean`
 
+- **`ConfirmExit`** Public Function
+  - **Returns:** `Boolean`
+  - **Signature:** `Public Function ConfirmExit() As Boolean`
+
 - **`CreateDatabaseTables`** Private Sub
   - **Parameters:** `db As SQLiteDatabase`
   - **Signature:** `Private Sub CreateDatabaseTables(db As SQLiteDatabase)`
@@ -71,6 +75,9 @@ None
 - **`DisplayToScreen`** Private Sub
   - **Parameters:** `patient As PatientData, haemo As HaemodynamicData, outputs() As Double, oxygen As OxygenTransportData, results As CalculationResults, includeOxygen As Boolean`
   - **Signature:** `Private Sub DisplayToScreen(patient As PatientData, haemo As HaemodynamicData, outputs() As Double, oxygen As OxygenTransportData, results As CalculationResults, includeOxygen As Boolean)`
+
+- **`ExitApplication`** Public Sub
+  - **Signature:** `Public Sub ExitApplication()`
 
 - **`getOutputChoice`** Public Function
   - **Returns:** `String`
@@ -278,7 +285,7 @@ None
 
 ---
 
-### Logger
+### debugLog
 
 #### Properties
 
@@ -298,101 +305,6 @@ None
 - **`Log`** Public Sub
   - **Parameters:** `message As String, level As String = "INFO", userID As String = "", sessionID As String = ""`
   - **Signature:** `Public Sub Log(message As String, level As String = "INFO", userID As String = "", sessionID As String = "")`
-
-#### Events
-
-None
-
----
-
-### ConsoleHelpers
-
-**Description:** Module containing shared methods and properties
-
-#### Properties
-
-None
-
-#### Methods
-
-- **`AskDouble`** Public Function
-  - **Parameters:** `prompt As String`
-  - **Returns:** `Double`
-  - **Signature:** `Public Function AskDouble(prompt As String) As Double`
-
-- **`AskText`** Public Function
-  - **Parameters:** `prompt As String`
-  - **Returns:** `String`
-  - **Signature:** `Public Function AskText(prompt As String) As String`
-
-- **`AskYesNo`** Public Function
-  - **Parameters:** `prompt As String`
-  - **Returns:** `Boolean`
-  - **Signature:** `Public Function AskYesNo(prompt As String) As Boolean`
-
-- **`CleanInput`** Public Function
-  - **Parameters:** `rawInput As String`
-  - **Returns:** `String`
-  - **Signature:** `Public Function CleanInput(rawInput As String) As String`
-
-- **`ClearScreen`** Public Sub
-  - **Signature:** `Public Sub ClearScreen()`
-
-- **`PauseForNext`** Public Sub
-  - **Signature:** `Public Sub PauseForNext()`
-
-- **`ResizeTerminal`** Public Sub
-  - **Parameters:** `cols As Integer, rows As Integer`
-  - **Signature:** `Public Sub ResizeTerminal(cols As Integer, rows As Integer)`
-
-- **`setScreenColours`** Public Sub
-  - **Signature:** `Public Sub setScreenColours()`
-
-#### Events
-
-None
-
----
-
-### ClinicalInterpreter
-
-**Description:** Module containing shared methods and properties
-
-#### Properties
-
-None
-
-#### Methods
-
-- **`GenerateOverallAssessment`** Public Function
-  - **Parameters:** `results As CalculationResults`
-  - **Returns:** `String`
-  - **Signature:** `Public Function GenerateOverallAssessment(results As CalculationResults) As String`
-
-- **`GetTreatmentSuggestions`** Public Function
-  - **Parameters:** `results As CalculationResults`
-  - **Returns:** `String()`
-  - **Signature:** `Public Function GetTreatmentSuggestions(results As CalculationResults) As String()`
-
-- **`InterpretCardiacIndex`** Public Function
-  - **Parameters:** `ci As Double`
-  - **Returns:** `String`
-  - **Signature:** `Public Function InterpretCardiacIndex(ci As Double) As String`
-
-- **`InterpretMixedVenousSat`** Public Function
-  - **Parameters:** `mvSat As Double`
-  - **Returns:** `String`
-  - **Signature:** `Public Function InterpretMixedVenousSat(mvSat As Double) As String`
-
-- **`InterpretOxygenExtraction`** Public Function
-  - **Parameters:** `extraction As Double`
-  - **Returns:** `String`
-  - **Signature:** `Public Function InterpretOxygenExtraction(extraction As Double) As String`
-
-- **`InterpretSVR`** Public Function
-  - **Parameters:** `svr As Double`
-  - **Returns:** `String`
-  - **Signature:** `Public Function InterpretSVR(svr As Double) As String`
 
 #### Events
 
@@ -426,4 +338,4 @@ None
 [Specify your license here]
 
 ---
-*This README was automatically generated from the Xojo project file on 13/8/2025*
+*This README was automatically generated from the Xojo project file on 22/8/2025*
