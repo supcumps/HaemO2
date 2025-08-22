@@ -83,7 +83,7 @@ Protected Module ClinicalInterpreter
 		  ElseIf ci > 4.0 Then
 		    Return "HIGH - Suggests hyperdynamic circulation (sepsis, hyperthyroidism)"
 		  Else
-		    Return "NORMAL"
+		    Return "Normal CI"
 		  End If
 		End Function
 	#tag EndMethod
@@ -95,7 +95,7 @@ Protected Module ClinicalInterpreter
 		  ElseIf mvSat > 80 Then
 		    Return "HIGH - Impaired oxygen extraction (sepsis) or high cardiac output"
 		  Else
-		    Return "NORMAL"
+		    Return "Normal O2 delivery"
 		  End If
 		End Function
 	#tag EndMethod
@@ -107,7 +107,7 @@ Protected Module ClinicalInterpreter
 		  ElseIf extraction > 35 Then
 		    Return "HIGH - Compensated oxygen delivery deficit"
 		  Else
-		    Return "NORMAL"
+		    Return "Normal O2 Usage"
 		  End If
 		End Function
 	#tag EndMethod
@@ -121,7 +121,7 @@ Protected Module ClinicalInterpreter
 		  ElseIf svr > 2600 Then
 		    Return "HIGH - Vasoconstriction (cardiogenic shock, hypothermia)"
 		  Else
-		    Return "NORMAL"
+		    Return "Normal SVR"
 		  End If
 		End Function
 	#tag EndMethod

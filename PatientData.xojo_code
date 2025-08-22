@@ -23,7 +23,7 @@ Protected Class PatientData
 
 	#tag ViewBehavior
 		#tag ViewProperty
-			Name="Name"
+			Name=Autolog.lv_Name
 			Visible=true
 			Group="ID"
 			InitialValue=""
@@ -63,7 +63,7 @@ Protected Class PatientData
 			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="Date"
+			Name=Autolog.lv_Date
 			Visible=false
 			Group="Behavior"
 			InitialValue=""

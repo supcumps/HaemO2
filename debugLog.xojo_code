@@ -1,5 +1,5 @@
 #tag Class
-Protected Class Logger
+Protected Class debugLog
 	#tag Method, Flags = &h0
 		Sub Close()
 		  
@@ -32,7 +32,7 @@ Protected Class Logger
 		  entry = entry + " " + message
 		  
 		  // Output to console
-		  System.DebugLog(entry)
+		  ''System.DebugLog(entry)
 		  
 		  // Write to file
 		  If logFile <> Nil Then
@@ -91,14 +91,6 @@ Protected Class Logger
 			Visible=true
 			Group="Position"
 			InitialValue="0"
-			Type="Integer"
-			EditorType=""
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="logFile"
-			Visible=false
-			Group="Behavior"
-			InitialValue=""
 			Type="Integer"
 			EditorType=""
 		#tag EndViewProperty

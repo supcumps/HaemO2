@@ -39,7 +39,7 @@ Protected Class HaemodynamicData
 
 	#tag ViewBehavior
 		#tag ViewProperty
-			Name="Name"
+			Name=Autolog.lv_Name
 			Visible=true
 			Group="ID"
 			InitialValue=""
@@ -79,7 +79,7 @@ Protected Class HaemodynamicData
 			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="Height"
+			Name=Autolog.lv_Height
 			Visible=false
 			Group="Behavior"
 			InitialValue=""
@@ -143,7 +143,7 @@ Protected Class HaemodynamicData
 			EditorType=""
 		#tag EndViewProperty
 		#tag ViewProperty
-			Name="Weight"
+			Name=Autolog.lv_Weight
 			Visible=false
 			Group="Behavior"
 			InitialValue=""

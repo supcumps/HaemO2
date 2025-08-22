@@ -39,7 +39,7 @@ Protected Class OxygenTransportData
 
 	#tag ViewBehavior
 		#tag ViewProperty
-			Name="Name"
+			Name=Autolog.lv_Name
 			Visible=true
 			Group="ID"
 			InitialValue=""

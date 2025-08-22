@@ -146,8 +146,8 @@ Inherits ConsoleApplication
 	#tag Method, Flags = &h21
 		Private Function CollectCardiacOutputs(ByRef outputs() As Double) As Boolean
 		  Do
-		    ClearScreen()
-		    stdout.WriteLine("CARDIAC OUTPUT MEASUREMENTS... ")
+		    
+		    stdout.WriteLine("CARDIAC OUTPUT MEASUREMENTS (N = 4.0 - 8.0    L/min... ")
 		    stdout.WriteLine("")
 		    stdout.WriteLine("")
 		    
@@ -189,27 +189,29 @@ Inherits ConsoleApplication
 	#tag Method, Flags = &h21
 		Private Function CollectHaemodynamicData(data As HaemodynamicData) As Boolean
 		  Do
-		    ClearScreen()
+		    GoToTop
 		    
-		    data.Height = ConsoleHelpers.AskDouble("HEIGHT (CM)")
-		    data.Weight = ConsoleHelpers.AskDouble("WEIGHT (KG)")
+		    data.Height = ConsoleHelpers.AskDouble("Height (cm)")
+		    data.Weight = ConsoleHelpers.AskDouble("Weight (Kg")
 		    data.HeartRate = ConsoleHelpers.AskDouble("HEART RATE (B/MIN)")
 		    
 		    stdout.WriteLine("")
 		    stdout.WriteLine("N.B.  ALL PRESSURES ARE IN MMHG. ")
 		    stdout.WriteLine("")
 		    
-		    data.ArterialSystolic = ConsoleHelpers.AskDouble("ARTERIAL B.P. - SYSTOLIC")
-		    data.ArterialDiastolic = ConsoleHelpers.AskDouble("ARTERIAL B.P. - DIASTOLIC")
-		    data.ArterialMean = ConsoleHelpers.AskDouble("ARTERIAL B.P. - MEAN")
+		    data.ArterialSystolic = ConsoleHelpers.AskDouble("ARTERIAL B.P. - SYSTOLIC..")
+		    data.ArterialDiastolic = ConsoleHelpers.AskDouble("ARTERIAL B.P. - DIASTOLIC..")
+		    data.ArterialMean = ConsoleHelpers.AskDouble("ARTERIAL B.P. - MEAN (N = 70 - 105 mmHg)...")
 		    data.PulmonaryMean = ConsoleHelpers.AskDouble("PULMONARY ARTERIAL PRESSURE - MEAN")
-		    data.PulmonaryWedge = ConsoleHelpers.AskDouble("PULMONARY ARTERIAL PRESSURE - WEDGE")
-		    data.CVPMean = ConsoleHelpers.AskDouble("CENTRAL VENOUS PRESSURE - MEAN")
+		    data.PulmonaryWedge = ConsoleHelpers.AskDouble("PULMONARY ARTERIAL PRESSURE - WEDGE (N =  6 - 12 mmHg)..")
+		    data.CVPMean = ConsoleHelpers.AskDouble("CENTRAL VENOUS PRESSURE - MEAN (N = 2 - 8 mmHg)..")
 		    
 		    stdout.WriteLine("")
 		    stdout.WriteLine("")
 		    
 		    If ConsoleHelpers.AskYesNo("ARE THE DATA CORRECT?") Then 
+		      ClearScreen()
+		      
 		      Return True
 		    Else
 		      ClearScreen()
@@ -223,8 +225,8 @@ Inherits ConsoleApplication
 	#tag Method, Flags = &h21
 		Private Function CollectOxygenTransportData(data As OxygenTransportData) As Boolean
 		  Do
-		    ClearScreen()
 		    
+		    GoToTop
 		    data.Haemoglobin = ConsoleHelpers.AskDouble("WHAT IS THE HAEMOGLOBIN ( GM/DECILITRE )")
 		    data.CoreTemperature = ConsoleHelpers.AskDouble("CORE TEMPERATURE......................... ")
 		    data.InspiredOxygen = ConsoleHelpers.AskDouble("PERCENT INSPIRED OXYGEN (E.G. 60)........ ")
@@ -233,24 +235,25 @@ Inherits ConsoleApplication
 		    stdout.WriteLine("ARTERIAL BLOOD GASES ")
 		    stdout.WriteLine("")
 		    
-		    data.ArterialPH = ConsoleHelpers.AskDouble("PH....................... ")
-		    data.ArterialPCO2 = ConsoleHelpers.AskDouble("PCO2..................... ")
-		    data.ArterialPO2 = ConsoleHelpers.AskDouble("PO2...................... ")
+		    data.ArterialPH = ConsoleHelpers.AskDouble("pH (N = 7.35-7.45)....................... ")
+		    data.ArterialPCO2 = ConsoleHelpers.AskDouble("PCO2 (35-45 mmHg (4.7-6.0 kPa))..................... ")
+		    data.ArterialPO2 = ConsoleHelpers.AskDouble("PO2  (N = 80-100 mmHg (10.7-13.3 kPa))...................... ")
 		    
 		    stdout.WriteLine("")
 		    stdout.WriteLine("MIXED VENOUS BLOOD GASES ")
 		    stdout.WriteLine("")
 		    
-		    data.VenousPH = ConsoleHelpers.AskDouble("PH........................ ")
-		    data.VenousPCO2 = ConsoleHelpers.AskDouble("PCO2...................... ")
-		    data.VenousPO2 = ConsoleHelpers.AskDouble("PO2....................... ")
+		    data.VenousPH = ConsoleHelpers.AskDouble("pH (N = 7.31-7.41 )........................ ")
+		    data.VenousPCO2 = ConsoleHelpers.AskDouble("PCO2 (N = 41-51 mmHg (5.5-6.8 kPa)))...................... ")
+		    data.VenousPO2 = ConsoleHelpers.AskDouble("PO2 (N = 35-40 mmHg (4.7-5.3 kPa))....................... ")
 		    
 		    stdout.WriteLine("")
 		    
 		    If ConsoleHelpers.AskYesNo("ARE THE DATA CORRECT?") Then 
-		      Return True
-		    Else
 		      ClearScreen()
+		      
+		      Return True
+		      
 		    end if
 		  Loop
 		  
@@ -274,9 +277,11 @@ Inherits ConsoleApplication
 		    stdout.WriteLine("")
 		    
 		    If ConsoleHelpers.AskYesNo("ARE THE DATA CORRECT?") Then 
+		      
 		      Return True
 		    Else
 		      ClearScreen()
+		      GoToTop
 		    end if
 		  Loop
 		  
@@ -369,7 +374,7 @@ Inherits ConsoleApplication
 
 	#tag Method, Flags = &h21
 		Private Sub DisplayClinicalInterpretation(results As CalculationResults)
-		  ClearScreen()
+		  
 		  
 		  stdout.WriteLine("CLINICAL INTERPRETATION")
 		  stdout.WriteLine("======================")
@@ -417,7 +422,7 @@ Inherits ConsoleApplication
 
 	#tag Method, Flags = &h21
 		Private Sub DisplayOxygenTransportResults(oxygen As OxygenTransportData, results As CalculationResults)
-		  ClearScreen()
+		  
 		  
 		  stdout.WriteLine("OXYGEN TRANSPORT STUDIES - PATIENT DATA")
 		  stdout.WriteLine("---------------------------------------")
@@ -435,6 +440,7 @@ Inherits ConsoleApplication
 		  
 		  ConsoleHelpers.PauseForNext()
 		  ClearScreen()
+		  GoToTop()
 		  
 		  stdout.WriteLine("RESULTS")
 		  stdout.WriteLine("-------")
@@ -551,7 +557,7 @@ Inherits ConsoleApplication
 
 	#tag Method, Flags = &h21
 		Private Sub DisplayToScreen(patient As PatientData, haemo As HaemodynamicData, outputs() As Double, oxygen As OxygenTransportData, results As CalculationResults, includeOxygen As Boolean)
-		  ClearScreen()
+		  
 		  
 		  ' Header
 		  stdout.WriteLine(" I.C.U. Haemodynamics and Oxygen Transport Report")
@@ -579,7 +585,9 @@ Inherits ConsoleApplication
 		  stdout.WriteLine("HEIGHT (CM).... " + Format(haemo.Height, "###") + "    WEIGHT (KG)... " + Format(haemo.Weight, "###"))
 		  
 		  ConsoleHelpers.PauseForNext()
-		  ClearScreen()
+		  
+		  stdout.WriteLine("")
+		  stdout.WriteLine("")
 		  
 		  ' Results
 		  stdout.WriteLine("RESULTS")
@@ -622,12 +630,12 @@ Inherits ConsoleApplication
 	#tag Method, Flags = &h0
 		Function getOutputChoice() As String
 		  
-		  ClearScreen()
+		  
 		  stdout.WriteLine("DO YOU WANT THE OUTPUT TO GO TO ........<S>CREEN ")
 		  stdout.WriteLine("")
-		  stdout.WriteLine("                                ........<P>RINTER")
+		  stdout.WriteLine("                                ........<P>RINT to File")
 		  stdout.WriteLine("")
-		  stdout.WriteLine("                                ........<D>ISK")
+		  stdout.WriteLine("                                ........<D>ATABASE Entry ")
 		  stdout.WriteLine("")
 		  stdout.WriteLine("                                ........<I>NTERPRETATION")
 		  stdout.WriteLine("")
@@ -643,6 +651,7 @@ Inherits ConsoleApplication
 		Private Sub HandleError(e As RuntimeException)
 		  
 		  ClearScreen()
+		  GoToTop()
 		  stdout.WriteLine("")
 		  stdout.WriteLine("      AN ERROR HAS OCCURRED:")
 		  stdout.WriteLine("      " + e.Message)
@@ -756,61 +765,70 @@ Inherits ConsoleApplication
 
 	#tag Method, Flags = &h21
 		Private Function RunClinicalStudy() As Boolean
-		  Var logger As New Logger(SpecialFolder.Documents, "Haem02LogFile")
+		  
+		  
 		  
 		  stdout.WriteLine("HAEMODYNAMICS")
 		  stdout.WriteLine("-------------")
 		  
 		  ' Patient demographic data
-		  logger.Log(" Patient demographic data","INFO" ,"DrPhilip", "SessionA123")
 		  Var patientData As New PatientData
 		  If Not CollectPatientData(patientData) Then Return True ' User wants to restart
 		  
+		  
+		  
 		  ' Haemodynamic measurements
-		  logger.Log("Haemodynamic measurements","INFO" ,"DrPhilip", "SessionA123")
+		  ClearScreen()
+		  GoToTop()
 		  Var haemoData As New HaemodynamicData
 		  If Not CollectHaemodynamicData(haemoData) Then Return True ' User wants to restart
 		  
 		  ' Cardiac output measurements
-		  logger.Log(" Cardiac output measurements","INFO" ,"DrPhilip", "SessionA123")
+		  ClearScreen()
+		  GoToTop()
 		  Var cardiacOutputs() As Double
 		  If Not CollectCardiacOutputs(cardiacOutputs) Then Return True ' User wants to restart
 		  
+		  
 		  ' Calculate basic haemodynamic parameters
-		  logger.Log(" Calculate basic haemodynamic parameters","INFO" ,"DrPhilip", "SessionA123")
 		  Var results As New CalculationResults
 		  CalculateHaemodynamics(patientData, haemoData, cardiacOutputs, results)
 		  
 		  ' Optional oxygen transport studies
-		  logger.Log(" oxygen transport studies","INFO" ,"DrPhilip", "SessionA123")
 		  Var oxygenData As New OxygenTransportData
 		  Var includeOxygen As Boolean = ConsoleHelpers.AskYesNo("WOULD YOU LIKE TO TEST OXYGEN TRANSPORT?")
 		  
 		  If includeOxygen Then
-		    logger.Log("Started oxygen transport studies","INFO" ,"DrPhilip", "SessionA123")
+		    ClearScreen()
+		    GoToTop()
 		    If Not CollectOxygenTransportData(oxygenData) Then Return True
 		    CalculateOxygenTransport(patientData, haemoData, oxygenData, results)
 		  End If
 		  
+		  stdout.WriteLine("")
+		  
 		  ' Review data option
 		  If ConsoleHelpers.AskYesNo("DO YOU WANT TO CHECK THE DATA SO FAR") Then
-		    logger.Log("Checking Data","INFO" ,"DrPhilip", "SessionA123")
 		    ShowDataReview(patientData, haemoData, cardiacOutputs, oxygenData, includeOxygen)
 		  Else
 		    ClearScreen()
-		  end If
+		  End If
+		  
+		  stdout.WriteLine("")
 		  
 		  If ConsoleHelpers.AskYesNo("DO YOU WANT TO MAKE ANY CHANGES?") Then
-		    logger.Log("Changing Data","INFO" ,"DrPhilip", "SessionA123")
 		    Return True ' Restart data collection
 		  Else
 		    ClearScreen()
 		  End If
 		  
 		  ' Output selection and display
-		  logger.Log("Output selection","INFO" ,"DrPhilip", "SessionA123")
-		  HandleOutput(patientData, haemoData, cardiacOutputs, oxygenData, results, includeOxygen)
 		  
+		  ClearScreen()
+		  GoToTop()
+		  
+		  HandleOutput(patientData, haemoData, cardiacOutputs, oxygenData, results, includeOxygen)
+		  stdout.WriteLine("")
 		  ' Ask if user wants to continue
 		  Return ConsoleHelpers.AskYesNo("DO YOU WANT TO INPUT MORE DATA?")
 		  
@@ -833,10 +851,10 @@ Inherits ConsoleApplication
 		    Try
 		      db.CreateDatabase
 		    Catch error As IOException
-		      System.DebugLog("The database file could not be created: " + error.Message)
+		      ''System.DebugLog("The Database File Could Not Be Created" + error.Message)
 		      
 		    Catch ex As DatabaseException
-		      stdout.WriteLine("Database error: " + ex.Message)
+		      stdout.WriteLine("Database Error" + ex.Message)
 		      
 		    Catch ex As RuntimeException
 		      stdout.WriteLine("Runtime error: " + ex.Message)
@@ -860,7 +878,7 @@ Inherits ConsoleApplication
 		    stdout.WriteLine("Record ID: " + patientID.ToString)
 		    
 		  Catch e As DatabaseException
-		    stdout.WriteLine("Database Error: " + e.Message)
+		    stdout.WriteLine("Database Error " + e.Message)
 		  Catch e As RuntimeException
 		    stdout.WriteLine("Error saving data: " + e.Message)
 		  End Try
@@ -877,20 +895,21 @@ Inherits ConsoleApplication
 	#tag Method, Flags = &h21
 		Private Sub ShowDataReview(patient As PatientData, haemo As HaemodynamicData, outputs() As Double, oxygen As OxygenTransportData, includeOxygen As Boolean)
 		  ClearScreen()
-		  
+		  GoToTop()
 		  stdout.WriteLine("NAME: " + patient.Name)
 		  stdout.WriteLine("MEDICAL RECORD NUMBER: " + patient.MRN)
 		  stdout.WriteLine("TIME: " + patient.Time + " HOURS   DATE: " + patient.Date)
 		  stdout.WriteLine("INOTROPES: " + patient.Inotropes)
 		  stdout.WriteLine("")
-		  stdout.WriteLine("HEIGHT: " + haemo.Height.ToString + " cm.     WEIGHT: " + haemo.Weight.ToString + " Kg. ")
-		  stdout.WriteLine("HEART RATE: " + haemo.HeartRate.ToString + " B.P.M. ")
+		  stdout.WriteLine("HEIGHT: " + haemo.Height.ToString + " cm.   ")  
+		  stdout.WriteLine("WEIGHT: " + haemo.Weight.ToString + " Kg. ")
+		  stdout.WriteLine("HEART RATE: " + haemo.HeartRate.ToString + " N = 60 - 100   beats/min ")
 		  stdout.WriteLine("ARTERIAL B.P.: ....SYSTOLIC: " + haemo.ArterialSystolic.ToString + " mmHg. ")
 		  stdout.WriteLine("               ...DIASTOLIC: " + haemo.ArterialDiastolic.ToString + " mmHg. ")
-		  stdout.WriteLine("               ........MEAN: " + haemo.ArterialMean.ToString + " mmHg. ")
+		  stdout.WriteLine("               ........MEAN: " + haemo.ArterialMean.ToString + " N =  70 - 105 mmHg. ")
 		  stdout.WriteLine("P. A. PRESSURES: ......MEAN: " + haemo.PulmonaryMean.ToString + " mmHg. ")
-		  stdout.WriteLine("                 .....WEDGE: " + haemo.PulmonaryWedge.ToString + " mmHg. ")
-		  stdout.WriteLine("C.V.P.: ...............MEAN: " + haemo.CVPMean.ToString + " mmHg. ")
+		  stdout.WriteLine("                 .....WEDGE: " + haemo.PulmonaryWedge.ToString + "N = 6 - 12 mmHg. ")
+		  stdout.WriteLine("C.V.P.: ...............MEAN: " + haemo.CVPMean.ToString + " N = 2 - 8 mmHg")
 		  stdout.WriteLine("")
 		  
 		  stdout.Write("CARDIAC OUTPUTS MEASURED: ")
@@ -909,11 +928,9 @@ Inherits ConsoleApplication
 	#tag Method, Flags = &h21
 		Private Sub ShowIntroduction()
 		  
-		  Var logger As New Logger(SpecialFolder.Documents, "Haem02LogFile")
-		  logger.Log("App started", "Introduction", "DrPhilip", "SessionA123")
-		  
 		  ResizeTerminal(100,50)
 		  setScreenColours()
+		  GoToTop()
 		  
 		  stdout.WriteLine("")
 		  stdout.WriteLine("")

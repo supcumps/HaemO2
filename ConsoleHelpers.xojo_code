@@ -2,36 +2,84 @@
 Protected Module ConsoleHelpers
 	#tag Method, Flags = &h0
 		Function AskDouble(prompt As String) As Double
-		  // AskDouble(prompt As String) As Double
+		  //Function AskDouble(prompt As String) As Double
 		  Do
 		    stdout.Write(prompt + ": ")
 		    stdout.Flush
 		    
 		    Var rawInput As String = stdin.ReadLine
-		    Var cleanInput As String = CleanInput(rawInput)
+		    
+		    // Debug the raw input character by character
+		    '''System.DebugLog("=== Character Analysis ===")
+		    '''System.DebugLog("Input length: " + rawInput.Length.ToString)
+		    For i As Integer = 1 To rawInput.Length
+		      Var char As String = rawInput.Mid(i, 1)
+		      Var ascii As Integer = char.Asc
+		      ''System.DebugLog("Char " + i.ToString + ": '" + char + "' (ASCII: " + ascii.ToString + ")")
+		    Next
+		    '''System.DebugLog("=== End Analysis ===")
+		    
+		    // Remove any control characters (CR, LF, etc.)
+		    Var cleanInput As String = ""
+		    For i As Integer = 1 To rawInput.Length
+		      Var char As String = rawInput.Mid(i, 1)
+		      Var ascii As Integer = char.Asc
+		      If ascii >= 32 And ascii <= 126 Then  // Printable ASCII characters
+		        cleanInput = cleanInput + char
+		      End If
+		    Next
+		    
+		    ''System.DebugLog("After removing control chars: '" + cleanInput + "'")
 		    
 		    If cleanInput <> "" Then
 		      Try
-		        Return cleanInput.ToDouble
-		      Catch
+		        Var result As Double = cleanInput.ToDouble
+		        Return result
+		      Catch e As RuntimeException
 		        stdout.WriteLine("Please enter a valid number.")
 		      End Try
 		    Else
 		      stdout.WriteLine("Please enter a valid number.")
 		    End If
 		  Loop
+		  
 		End Function
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
 		Function AskText(prompt As String) As String
-		  If prompt <> "" Then
+		  // Function AskText(prompt As String) As String
+		  Do
+		    // Clear any pending input first
+		    stdout.WriteLine("")  // Ensure we're on a new line
 		    stdout.Write(prompt + ": ")
 		    stdout.Flush
-		  End If
+		    
+		    // Read the input
+		    Var rawInput As String = stdin.ReadLine
+		    
+		    // Remove any control characters that might be causing issues
+		    Var cleanedInput As String = ""
+		    For i As Integer = 1 To rawInput.Length
+		      Var char As String = rawInput.Mid(i, 1)
+		      Var ascii As Integer = char.Asc
+		      // Only keep printable characters (space to tilde)
+		      If ascii >= 32 And ascii <= 126 Then
+		        cleanedInput = cleanedInput + char
+		      End If
+		    Next
+		    
+		    cleanedInput = cleanedInput.Trim
+		    
+		    'System.DebugLog("Raw: '" + rawInput + "' Cleaned: '" + cleanedInput + "'")
+		    
+		    If cleanedInput <> "" Then
+		      Return cleanedInput
+		    Else
+		      stdout.WriteLine("Please enter some text.")
+		    End If
+		  Loop
 		  
-		  Var rawInput As String = stdin.ReadLine
-		  Return CleanInput(rawInput)
 		End Function
 	#tag EndMethod
 
@@ -56,7 +104,7 @@ Protected Module ConsoleHelpers
 		      
 		      
 		      Select Case Input
-		      Case "Y", "YES"
+		      Case "Y", "Yes"
 		        Return True
 		      Case "N", "NO"
 		        Return False
@@ -72,31 +120,58 @@ Protected Module ConsoleHelpers
 
 	#tag Method, Flags = &h0
 		Function CleanInput(rawInput As String) As String
-		  // Add this as a shared method in ConsoleHelpers
-		  // Function CleanInput(rawInput As String) As String
-		  // Use the exact same logic that works in AskYesNo
-		  Var cleanInput As String = ""
-		  For i As Integer = 0 To rawInput.Length - 1
-		    Var char As String = rawInput.Mid(i, 1)
-		    Var ascii As Integer = Asc(char)
-		    // Skip null characters and other control characters  
-		    If ascii >= 32 And ascii <= 126 Then
-		      cleanInput = cleanInput + char
+		  // Private Function CleanInput(Input As String) As String
+		  Var result As String = Input.Trim
+		  Var cleaned As String = ""
+		  
+		  // Use 1-based indexing for Xojo strings
+		  For i As Integer = 1 To result.Length
+		    Var char As String = result.Mid(i, 1)
+		    If (char >= "0" And char <= "9") Or char = "." Or char = "-" Then
+		      cleaned = cleaned + char
 		    End If
 		  Next
 		  
-		  return cleanInput
+		  Return cleaned
+		  
 		End Function
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Sub ClearScreen()
+		Sub ClearLine()
+		  // Clear current line
 		  
-		  ' In console applications, we can clear by printing blank lines
-		  For i As Integer = 1 To 50
-		    stdout.WriteLine("")
-		  Next
-		  System.DebugLog  Chr(27) + "[H"    // Move cursor to home (0,0)
+		  stdout.Write(Chr(27) + "[2K")
+		  stdout.Flush
+		  
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub ClearScreen()
+		  // Clear entire screen
+		  stdout.Write(Chr(27) + "[2J")
+		  stdout.Flush
+		  
+		  
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub ClearToEnd()
+		  // Clear from cursor to end of screen
+		  stdout.Write(Chr(27) + "[0J")
+		  stdout.Flush
+		  
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub GoToTop()
+		   // Move cursor to top-left (1,1)
+		  stdout.Write(Chr(27) + "[H")
+		  stdout.Flush
+		  
 		End Sub
 	#tag EndMethod
 
@@ -114,8 +189,9 @@ Protected Module ConsoleHelpers
 		Sub ResizeTerminal(cols As Integer, rows As Integer)
 		  
 		  // Use ANSI escape sequence to resize terminal window
-		  System.DebugLog Chr(27) + "[8;" + Str(rows) + ";" + Str(cols) + "t"
-		  
+		  'System.DebugLog Chr(27) + "[8;" + Str(rows) + ";" + Str(cols) + "t"
+		  stdout.Write( Chr(27) + "[8;" + Str(rows) + ";" + Str(cols) + "t")
+		  stdout.Flush
 		End Sub
 	#tag EndMethod
 
@@ -130,8 +206,8 @@ Protected Module ConsoleHelpers
 		  var kWhiteText As String = Chr(27) + "[97m"   // Bright white text
 		  
 		  // Set up the entire screen with light blue background
-		  System.DebugLog kLightBlue + kClearScreen + kHomeCursor + kWhiteText
-		  
+		  'System.DebugLog kLightBlue + kClearScreen + kHomeCursor + kWhiteText
+		  stdout.Write(kLightBlue + kClearScreen + kHomeCursor + kWhiteText)
 		  
 		End Sub
 	#tag EndMethod
