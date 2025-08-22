@@ -288,6 +288,20 @@ Inherits ConsoleApplication
 		End Function
 	#tag EndMethod
 
+	#tag Method, Flags = &h0
+		Function ConfirmExit() As Boolean
+		  
+		  stdout.Write("Are you sure you want to exit? (y/n): ")
+		  stdout.Flush
+		  Var response As String = stdin.ReadLine.Trim.Lowercase
+		  Return response = "y" Or response = "yes"
+		  
+		  
+		  
+		  
+		End Function
+	#tag EndMethod
+
 	#tag Method, Flags = &h21
 		Private Sub CreateDatabaseTables(db As SQLiteDatabase)
 		  // Private Sub CreateDatabaseTables(db As SQLiteDatabase)
@@ -628,6 +642,18 @@ Inherits ConsoleApplication
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
+		Sub ExitApplication()
+		  
+		  If ConfirmExit() Then
+		    stdout.WriteLine("Exiting application...")
+		    Quit
+		  Else
+		    stdout.WriteLine("Continuing...")
+		  End If
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
 		Function getOutputChoice() As String
 		  
 		  
@@ -695,6 +721,8 @@ Inherits ConsoleApplication
 		  Loop
 		  
 		  If ConsoleHelpers.AskYesNo("DO YOU WANT TO REVIEW THIS DATA?") Then
+		    ClearScreen()
+		    GoToTop()
 		    HandleOutput(patient, haemo, outputs, oxygen, results, includeOxygen)
 		  Else
 		    ClearScreen()
@@ -806,7 +834,8 @@ Inherits ConsoleApplication
 		  End If
 		  
 		  stdout.WriteLine("")
-		  
+		  ClearScreen()
+		  GoToTop()
 		  ' Review data option
 		  If ConsoleHelpers.AskYesNo("DO YOU WANT TO CHECK THE DATA SO FAR") Then
 		    ShowDataReview(patientData, haemoData, cardiacOutputs, oxygenData, includeOxygen)
@@ -817,6 +846,7 @@ Inherits ConsoleApplication
 		  stdout.WriteLine("")
 		  
 		  If ConsoleHelpers.AskYesNo("DO YOU WANT TO MAKE ANY CHANGES?") Then
+		    stdout.WriteLine("")
 		    Return True ' Restart data collection
 		  Else
 		    ClearScreen()
@@ -830,7 +860,15 @@ Inherits ConsoleApplication
 		  HandleOutput(patientData, haemoData, cardiacOutputs, oxygenData, results, includeOxygen)
 		  stdout.WriteLine("")
 		  ' Ask if user wants to continue
-		  Return ConsoleHelpers.AskYesNo("DO YOU WANT TO INPUT MORE DATA?")
+		  
+		  If ConsoleHelpers.AskYesNo("DO YOU WANT TO INPUT MORE DATA?") Then
+		    stdout.WriteLine("")
+		    Return True
+		  Else
+		    ExitApplication()
+		  End If
+		  
+		  
 		  
 		End Function
 	#tag EndMethod
@@ -970,32 +1008,49 @@ Inherits ConsoleApplication
 
 	#tag Note, Name = Ansi colour codes
 		ANSI color codes for reference:
-		Text Colors (30-37):
 		
-		30 = Black
-		31 = Red
-		32 = Green
-		33 = Yellow
-		34 = Blue
-		35 = Magenta
-		36 = Cyan
-		37 = White
+		As a module:-->
 		
-		Background Colors (40-47):
-		
-		40 = Black background
-		41 = Red background
-		42 = Green background
-		43 = Yellow background
-		44 = Blue background
-		45 = Magenta background
-		46 = Cyan background
-		47 = White background
-		
-		Bright/Bold variants (90-97 for text, 100-107 for backgrounds):
-		
-		97 = Bright white text
-		107 = Bright white background
+		Module ConsoleColors
+		  // Text Colors
+		  Const Black = Chr(27) + "[30m"
+		  Const Red = Chr(27) + "[31m"
+		  Const Green = Chr(27) + "[32m"
+		  Const Yellow = Chr(27) + "[33m"
+		  Const Blue = Chr(27) + "[34m"
+		  Const Magenta = Chr(27) + "[35m"
+		  Const Cyan = Chr(27) + "[36m"
+		  Const White = Chr(27) + "[37m"
+		  
+		  // Bright Colors
+		  Const BrightRed = Chr(27) + "[91m"
+		  Const BrightGreen = Chr(27) + "[92m"
+		  Const BrightYellow = Chr(27) + "[93m"
+		  Const BrightBlue = Chr(27) + "[94m"
+		  Const BrightMagenta = Chr(27) + "[95m"
+		  Const BrightCyan = Chr(27) + "[96m"
+		  Const BrightWhite = Chr(27) + "[97m"
+		  
+		  // Background Colors
+		  Const BgBlack = Chr(27) + "[40m"
+		  Const BgRed = Chr(27) + "[41m"
+		  Const BgGreen = Chr(27) + "[42m"
+		  Const BgYellow = Chr(27) + "[43m"
+		  Const BgBlue = Chr(27) + "[44m"
+		  Const BgMagenta = Chr(27) + "[45m"
+		  Const BgCyan = Chr(27) + "[46m"
+		  Const BgWhite = Chr(27) + "[47m"
+		  
+		  // Reset
+		  Const Reset = Chr(27) + "[0m"
+		  
+		  // Text Styles
+		  Const Bold = Chr(27) + "[1m"
+		  Const Dim = Chr(27) + "[2m"
+		  Const Underline = Chr(27) + "[4m"
+		  Const Blink = Chr(27) + "[5m"
+		  Const Reverse = Chr(27) + "[7m"
+		End Module
 		
 	#tag EndNote
 
